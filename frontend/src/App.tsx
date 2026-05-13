@@ -2,6 +2,8 @@ import './App.css';
 import TopBar from './components/layout/TopBar';
 import RequestTabs from './components/request/RequestTabs';
 import SideBar from './components/layout/SideBar';
+import ResponseMeta from './components/response/ResponseMeta';
+import ResponseTabs from './components/response/ResponseTabs';
 
 function App() {
     return (
@@ -26,19 +28,13 @@ function App() {
 
                             <section className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900">
                                 <div className="border-b border-zinc-800 px-4 py-3">
-                                    <div className="flex flex-wrap gap-4 text-sm text-zinc-400">
-                                        <span>Status: 200</span>
-                                        <span>Time: 120ms</span>
-                                        <span>Size: 1.2KB</span>
-                                    </div>
+                                    <ResponseMeta />
                                 </div>
 
                                 <div className="min-h-0 flex-1 overflow-auto p-4">
-                                    <pre className="whitespace-pre-wrap break-words text-sm text-zinc-300">
-                                        {`{
-                                            "message": "success"
-                                        }`}
-                                    </pre>
+                                    <div className="flex-1 min-h-0">
+                                        <ResponseTabs />
+                                    </div>
                                 </div>
                             </section>
                         </div>
