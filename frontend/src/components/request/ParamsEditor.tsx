@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useRequestStore } from "@/store/requestStore"
 
 type Param = {
   key: string
@@ -8,16 +9,22 @@ type Param = {
 }
 
 export default function ParamsEditor() {
-  const [params, setParams] = useState<Param[]>([])
+  // const [params, setParams] = useState<Param[]>([])
+  
+  const params = useRequestStore((state) => state.params)
+  const setParams = useRequestStore((state) => state.setParams)
 
   function updateParam(
     index: number,
     field: "key" | "value",
     value: string
   ) {
-    const updated = [...params]
-    updated[index][field] = value
-    setParams(updated)
+    const newParams = [...params]
+
+    newParams[index] = {
+      ...newParams[index],[field]: value,
+    }
+    setParams(newParams)
   }
 
   function addParam() {
@@ -36,11 +43,7 @@ export default function ParamsEditor() {
   }
 
   function removeParam(index: number) {
-    const updated = params.filter(
-      (_, i) => i !== index
-    )
-
-    setParams(updated)
+    setParams(params.filter((_,i) => i!== index))
   }
 
   return (

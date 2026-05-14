@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { Textarea } from "../ui/textarea";
 import JsonEditor from "./JsonEditor";
+import { useRequestStore } from "@/store/requestStore";
 
 export default function BodyEditor() {
-    const [body, setBody] = useState(`{"email": "abc@abc.com"}`)
+    // const [body, setBody] = useState(`{"email": "abc@abc.com"}`)
+
+    const body = useRequestStore((state) => state.body)
+
+    const setBody = useRequestStore((state) => state.setBody)
 
     return (
         <div className="flex h-full min-h-0 flex-1 flex-col overflow-hidden">

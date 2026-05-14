@@ -1,4 +1,4 @@
-import * as React from "react"
+import { useRequestStore } from "@/store/requestStore"
 
 import {
   Select,
@@ -11,8 +11,13 @@ import {
 } from "@/components/ui/select"
 
 export default function MethodSelector() {
+
+  const method = useRequestStore((state) => state.method)
+
+  const setMethod = useRequestStore((state) => state.setMethod)
+
   return (
-    <Select defaultValue="GET">
+    <Select value={method} onValueChange={setMethod}>
       <SelectTrigger className="w-24 ">
         <SelectValue />
       </SelectTrigger>

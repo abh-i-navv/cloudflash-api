@@ -14,7 +14,7 @@ function App() {
                 <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
                     <TopBar />
 
-                    <main className="flex min-h-0 flex-1 flex-col overflow-hidden p-4">
+                    <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden p-4">
                         <div className="flex min-h-0 flex-1 flex-col gap-4">
                             <section className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900">
                                 <div className="border-b border-zinc-800 px-4 py-3">

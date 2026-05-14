@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
+import { useRequestStore } from "@/store/requestStore"
 
 type Header = {
   key: string
@@ -8,12 +9,15 @@ type Header = {
 }
 
 export default function HeadersEditor() {
-    const [headers, setHeaders] = useState<Header[]>([{key: "", value: ""}])
+    // const [headers, setHeaders] = useState<Header[]>([{key: "", value: ""}])
+
+    const headers = useRequestStore((state) => state.headers)
+    const setHeaders = useRequestStore((state) => state.setHeaders) 
 
     function updateHeader(index: number, field: "key" | "value", value: string) {
         const newHeaders = [...headers]
 
-        newHeaders[index][field] = value
+        newHeaders[index] = {...newHeaders[index], [field]: value}
         setHeaders(newHeaders)
     }
 
@@ -29,8 +33,7 @@ export default function HeadersEditor() {
     }
 
     function removeHeader(index: number){
-        const newHeaders = headers.filter((_, i) => i !== index)
-        setHeaders(newHeaders)
+        setHeaders(headers.filter((_,i) => i !== index))
     }
 
     return (

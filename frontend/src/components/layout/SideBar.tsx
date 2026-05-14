@@ -2,7 +2,7 @@ import { Button } from "../ui/button"
 
 export default function SideBar() {
     return(
-        <aside className="flex h-full w-64 shrink-0 flex-col overflow-hidden border-r border-zinc-800 bg-zinc-900">
+        <aside className="flex h-full w-[20%] min-w-[180px]  max-w-[260px] shrink-0 flex-col overflow-hidden border-r border-zinc-800 bg-zinc-900">
         
         {/* Sidebar Header */}
         <div className="h-14 border-b border-zinc-800 flex items-center px-4">

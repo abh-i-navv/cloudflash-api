@@ -1,16 +1,12 @@
+import { useRequestStore } from "@/store/requestStore"
 import JsonEditor from "../request/JsonEditor"
 
 export default function ResponseViewer() {
-    const response = `{
-        "message": "success",
-        "data": {
-            "id": 1
-        }
-    }`
+    const responseBody = useRequestStore((state) => state.responseBody)
 
     return (
         <div className="flex-1 min-h-0">
-            <JsonEditor value={response} editable={false} />
+            <JsonEditor value={responseBody} editable={false} />
         </div>
     )
 }
