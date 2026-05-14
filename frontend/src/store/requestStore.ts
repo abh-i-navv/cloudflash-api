@@ -56,6 +56,11 @@ type RequestStore = {
 
     loading: boolean
     setLoading: (loading: boolean ) => void
+
+    //error
+    error: string
+
+    setError: (error: string) => void
 }
 
 export const useRequestStore = create<RequestStore>((set) => ({
@@ -131,5 +136,9 @@ export const useRequestStore = create<RequestStore>((set) => ({
     //loading
 
     loading:false,
-    setLoading: (loading) => set({loading})
+    setLoading: (loading) => set({loading}),
+
+    //error
+    error: "",
+    setError: (error:string) => set({error})
 }))

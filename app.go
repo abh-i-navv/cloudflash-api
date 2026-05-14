@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"cloudflash-api/database"
 	"context"
 	"fmt"
 	"io"
@@ -34,6 +35,8 @@ func (a *App) SendRequest(req APIRequest) APIResponse {
 		return APIResponse{
 			Status: 0,
 			Body:   err.Error(),
+			Time:   0,
+			Size:   "0B",
 		}
 	}
 
@@ -53,6 +56,8 @@ func (a *App) SendRequest(req APIRequest) APIResponse {
 		return APIResponse{
 			Status: 0,
 			Body:   err.Error(),
+			Time:   0,
+			Size:   "0B",
 		}
 	}
 
@@ -64,6 +69,8 @@ func (a *App) SendRequest(req APIRequest) APIResponse {
 		return APIResponse{
 			Status: 0,
 			Body:   err.Error(),
+			Time:   0,
+			Size:   "0B",
 		}
 	}
 
@@ -72,17 +79,24 @@ func (a *App) SendRequest(req APIRequest) APIResponse {
 	var responseHeaders []ResponseHeader
 
 	for key, values := range res.Header {
+		value := ""
+
+		if len(values) > 0 {
+			value = values[0]
+		}
 		responseHeaders = append(responseHeaders,
-			ResponseHeader{Key: key, Value: values[0]})
+			ResponseHeader{Key: key, Value: value})
 	}
 
 	elapsed := time.Since(start)
 
+	go database.SaveHistory(req.Method, req.URL, req.Body)
+
 	return APIResponse{
-		Status: res.StatusCode,
-		Time:   elapsed.Milliseconds(),
-		Size:   fmt.Sprintf("%.2fKB", float64(len(bodyBytes))/1024.0),
-		Body:   bodyString,
-		Headrs: responseHeaders,
+		Status:  res.StatusCode,
+		Time:    elapsed.Milliseconds(),
+		Size:    fmt.Sprintf("%.2fKB", float64(len(bodyBytes))/1024.0),
+		Body:    bodyString,
+		Headers: responseHeaders,
 	}
 }

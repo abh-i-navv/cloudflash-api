@@ -25,8 +25,11 @@ export default function TopBar() {
   const loading = useRequestStore((state) => state.loading)
   const setLoading = useRequestStore((state) => state.setLoading)
 
+  const setError = useRequestStore((state) => state.setError)
+
   async function handleSend() {
     try {
+      setError("")
       setLoading(true)
       const req = new models.main.APIRequest({
         method,
@@ -44,7 +47,10 @@ export default function TopBar() {
       setResponseSize(res.size)
       setResponseHeaders(res.headers)
     } catch (error) {
-      console.log(error)
+      setError("failed to send request")
+
+      setResponseStatus(0)
+      setResponseBody(String(error))
     }
     finally{
       setLoading(false)

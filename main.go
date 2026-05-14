@@ -1,6 +1,7 @@
 package main
 
 import (
+	"cloudflash-api/database"
 	"embed"
 
 	"github.com/wailsapp/wails/v2"
@@ -12,6 +13,9 @@ import (
 var assets embed.FS
 
 func main() {
+	//DB Connection
+	database.InitDB()
+
 	// Create an instance of the app structure
 	app := NewApp()
 

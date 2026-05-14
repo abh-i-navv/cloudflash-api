@@ -25,9 +25,9 @@ type ResponseHeader struct {
 }
 
 type APIResponse struct {
-	Status int              `json:"status"`
-	Time   int64            `json:"time"`
-	Size   string           `json:"size"`
-	Body   string           `jsong:"body"`
-	Headrs []ResponseHeader `json:"headers"`
+	Status  int              `json:"status"`
+	Time    int64            `json:"time"`
+	Size    string           `json:"size"`
+	Body    string           `jsong:"body"`
+	Headers []ResponseHeader `json:"headers"`
 }
