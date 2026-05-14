@@ -51,6 +51,11 @@ type RequestStore = {
     setResponseSize: (size: string) => void
 
     setResponseHeaders: (headers: ResponseHeader[]) => void
+
+    //loading
+
+    loading: boolean
+    setLoading: (loading: boolean ) => void
 }
 
 export const useRequestStore = create<RequestStore>((set) => ({
@@ -59,11 +64,12 @@ export const useRequestStore = create<RequestStore>((set) => ({
     method: "GET",
     url: "",
     
-    body: `{
-    "email": "abc@abc.com"
-    }`,
+    body: `{"email": "abc@abc.com"}`,
 
-    headers: [],
+    headers: [{key: "content-type",
+            value:"application/json"},
+            {key: "Connection", value: "keep-alive"},
+        ],
 
     params: [],
 
@@ -121,5 +127,9 @@ export const useRequestStore = create<RequestStore>((set) => ({
     setResponseSize: (responseSize) =>set({ responseSize }),
 
     setResponseHeaders: (responseHeaders) =>set({ responseHeaders }),
+    
+    //loading
 
+    loading:false,
+    setLoading: (loading) => set({loading})
 }))
