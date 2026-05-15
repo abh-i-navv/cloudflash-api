@@ -3,6 +3,8 @@ package database
 import (
 	"database/sql"
 	"log"
+	"os"
+	"path/filepath"
 
 	_ "modernc.org/sqlite"
 )
@@ -32,13 +34,28 @@ func createTables() {
 }
 
 func InitDB() {
-	db, err := sql.Open("sqlite", "./data/cloudflash.db")
+	exePath, err := os.Executable()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	exeDir := filepath.Dir(exePath)
+	dataDir := filepath.Join(exeDir, "data")
+
+	err = os.MkdirAll(dataDir, 0o755)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	dbPath := filepath.Join(dataDir, "cloudflash.db")
+
+	db, err := sql.Open("sqlite", dbPath)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Println("DB initialised")
+	log.Println("DB initialised at", dbPath)
 	DB = db
 	createTables()
 }

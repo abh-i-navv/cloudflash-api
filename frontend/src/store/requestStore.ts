@@ -153,7 +153,7 @@ export const useRequestStore = create<RequestStore>((set) => ({
 
     //history
     history: [],
-    setHistory: (history) => set({history}),
+    setHistory: (history) => set({history: Array.isArray(history) ? history : []}),
 
     //adding history item
     addHistoryItem: (item) => set((state) => (

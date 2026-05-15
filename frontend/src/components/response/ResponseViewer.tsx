@@ -11,7 +11,7 @@ export default function ResponseViewer() {
         <div className="flex flex-1 items-center justify-center">
             <Loader />
         </div>
-        ) : (<div className="flex-1 min-h-0  custom-scrollbar">
+        ) : (<div className="flex-1 min-h-0 ">
             <JsonEditor value={responseBody} editable={false} />
         </div>))
     

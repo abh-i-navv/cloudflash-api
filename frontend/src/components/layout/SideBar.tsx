@@ -41,10 +41,11 @@ export default function SideBar() {
     try {
       const result = await GetHistory()
     
-      setHistory(result)
+      setHistory(Array.isArray(result) ? result : [])
     
     } catch (error) {
       console.log(error)
+      setHistory([])
     }
   }
 
@@ -77,7 +78,7 @@ export default function SideBar() {
     const unsubscribe = EventsOn("history_updated", async () => {
       const updatedHistory = await GetHistory()
 
-      setHistory(updatedHistory)
+      setHistory(Array.isArray(updatedHistory) ? updatedHistory : [])
     })
 
     refreshHistory()
