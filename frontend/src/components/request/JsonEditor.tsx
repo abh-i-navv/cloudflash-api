@@ -14,7 +14,7 @@ export default function JsonEditor({
   editable=true
 }: Props) {
   return (
-    <div className="h-full overflow-hidden rounded-lg border border-zinc-800">
+    <div className="h-full overflow-hidden rounded-lg border border-zinc-800 ">
       <CodeMirror
         value={value}
         height="100%"

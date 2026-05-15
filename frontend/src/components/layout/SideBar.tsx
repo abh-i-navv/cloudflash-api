@@ -99,12 +99,11 @@ export default function SideBar() {
       {/* Sidebar Content */}
       <div className="p-4 overflow-hidden space-y-2 flex-1 flex flex-col">
 
-          <Button className="w-full shrink-0" onClick={handleNewRequest}>+ New Request</Button>
-          
-      <ScrollArea className="mt-6 space-y-2 flex-1 min-h-0 ">
+      <Button className="w-full shrink-0" onClick={handleNewRequest}>+ New Request</Button>
+      <div className="mt-6 space-y-2 flex-1 min-h-0 overflow-y-auto custom-scrollbar">
+
           {history.map((item) => (
-            <React.Fragment key={item.id}>
-              <div key={item.id} onClick={() => loadHistoryItem(item) } 
+            <div key={item.id} onClick={() => loadHistoryItem(item) } 
               className="group rounded-md border border-zinc-800 bg-zinc-900 px-3 py-3 cursor-pointer transition-colors hover:bg-zinc-800 " > 
               <div className=" flex items-center gap-2 "> 
                 <div className=" text-sm font-semibold text-green-400 "> {item.method} </div> 
@@ -118,11 +117,8 @@ export default function SideBar() {
                 </div>
               </div>
               
-              <Separator className="my-2" />
-            </React.Fragment>
-          ))}
-        <ScrollBar orientation="vertical" color="white"/>
-      </ScrollArea>
+            ))}
+      </div>
       </div>
     </aside>
   )

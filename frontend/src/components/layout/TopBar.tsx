@@ -6,6 +6,14 @@ import {SendRequest} from "../../../wailsjs/go/main/App"
 import * as models from "../../../wailsjs/go/models"
 import { Loader } from "lucide-react";
 
+function formatResponseBody(response: string) {
+  try {
+    return JSON.stringify(JSON.parse(response), null, 2)
+  } catch {
+    return response
+  }
+}
+
 export default function TopBar() {
   const url = useRequestStore((state) => state.url)
   const setUrl = useRequestStore((state) => state.setUrl)
@@ -41,7 +49,7 @@ export default function TopBar() {
       
       const res = await SendRequest(req)
   
-      setResponseBody(res.body)
+      setResponseBody(formatResponseBody(res.body))
       setResponseStatus(res.status)
       setResponseTime(res.time)
       setResponseSize(res.size)
