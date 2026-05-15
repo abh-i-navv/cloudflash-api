@@ -1,4 +1,5 @@
 import { create } from "zustand"
+import * as models from "../../wailsjs/go/models"
 
 type Header = {
     key: string
@@ -61,6 +62,17 @@ type RequestStore = {
     error: string
 
     setError: (error: string) => void
+
+    //history
+    history: models.database.HistoryItem[]
+
+    setHistory: (history: models.database.HistoryItem[]) => void
+
+    //inserting history item
+    addHistoryItem: (item: models.database.HistoryItem) => void
+
+    //deleting history item
+    deleteHistoryItem: (id: number) => void
 }
 
 export const useRequestStore = create<RequestStore>((set) => ({
@@ -73,7 +85,7 @@ export const useRequestStore = create<RequestStore>((set) => ({
 
     headers: [{key: "content-type",
             value:"application/json"},
-            {key: "Connection", value: "keep-alive"},
+            // {key: "Connection", value: "keep-alive"},
         ],
 
     params: [],
@@ -92,15 +104,12 @@ export const useRequestStore = create<RequestStore>((set) => ({
 
     setParams: (params) =>
       set({ params }),
-    
+
     //response state
 
     responseBody: JSON.stringify(
         {
-            message: "success",
-            data: {
-            id: 12345,
-            },
+            message: "Welcome to Cloud Flash API",
         },
         null,
         2
@@ -140,5 +149,21 @@ export const useRequestStore = create<RequestStore>((set) => ({
 
     //error
     error: "",
-    setError: (error:string) => set({error})
+    setError: (error:string) => set({error}),
+
+    //history
+    history: [],
+    setHistory: (history) => set({history}),
+
+    //adding history item
+    addHistoryItem: (item) => set((state) => (
+        {
+            history: [...state.history, item]
+        }
+    )),
+
+    //deleting history item
+    deleteHistoryItem: (id: number) => set((state) => ({
+        history: state.history.filter((item) => item.ID !== id)
+    }))
 }))

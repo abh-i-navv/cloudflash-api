@@ -46,6 +46,7 @@ export default function TopBar() {
       setResponseTime(res.time)
       setResponseSize(res.size)
       setResponseHeaders(res.headers)
+
     } catch (error) {
       setError("failed to send request")
 

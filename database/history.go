@@ -48,3 +48,12 @@ func GetHistory() ([]HistoryItem, error) {
 	}
 	return history, nil
 }
+
+func DeleteHistoryItem(id int) error {
+	query := `
+	DELETE FROM request_history
+	WHERE id = ?
+	`
+	_, err := DB.Exec(query, id)
+	return err
+}

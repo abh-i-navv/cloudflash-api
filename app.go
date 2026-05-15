@@ -8,6 +8,10 @@ import (
 	"io"
 	"net/http"
 	"time"
+
+	_ "github.com/wailsapp/wails/runtime"
+	"github.com/wailsapp/wails/v2/pkg/runtime"
+	_ "github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 // App struct
@@ -25,6 +29,9 @@ func NewApp() *App {
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
+
+// global http client
+var httpClient = &http.Client{Timeout: 30 * time.Second}
 
 func (a *App) SendRequest(req APIRequest) APIResponse {
 	start := time.Now()
@@ -48,9 +55,9 @@ func (a *App) SendRequest(req APIRequest) APIResponse {
 		httpReq.Header.Set(header.Key, header.Value)
 	}
 
-	client := &http.Client{Timeout: 30 * time.Second}
+	// httpClient := &http.Client{Timeout: 30 * time.Second}
 
-	res, err := client.Do(httpReq)
+	res, err := httpClient.Do(httpReq)
 
 	if err != nil {
 		return APIResponse{
@@ -90,7 +97,16 @@ func (a *App) SendRequest(req APIRequest) APIResponse {
 
 	elapsed := time.Since(start)
 
-	go database.SaveHistory(req.Method, req.URL, req.Body)
+	// go routine for saving the request in database and making the app faster
+	go func() {
+		err := database.SaveHistory(req.Method, req.URL, req.Body)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		runtime.EventsEmit(a.ctx, "history_updated")
+	}()
 
 	return APIResponse{
 		Status:  res.StatusCode,
@@ -98,5 +114,24 @@ func (a *App) SendRequest(req APIRequest) APIResponse {
 		Size:    fmt.Sprintf("%.2fKB", float64(len(bodyBytes))/1024.0),
 		Body:    bodyString,
 		Headers: responseHeaders,
+	}
+}
+
+func (a *App) GetHistory() []database.HistoryItem {
+	history, err := database.GetHistory()
+
+	if err != nil {
+		fmt.Println(err)
+
+		return []database.HistoryItem{}
+	}
+	return history
+}
+
+func (a *App) DeleteHistoryItem(id int) {
+	err := database.DeleteHistoryItem(id)
+
+	if err != nil {
+		fmt.Println(err)
 	}
 }

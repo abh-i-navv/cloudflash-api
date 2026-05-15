@@ -14,7 +14,7 @@ var assets embed.FS
 
 func main() {
 	//DB Connection
-	database.InitDB()
+	go database.InitDB()
 
 	// Create an instance of the app structure
 	app := NewApp()
