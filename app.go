@@ -35,8 +35,18 @@ var httpClient = &http.Client{Timeout: 30 * time.Second}
 
 func (a *App) SendRequest(req APIRequest) APIResponse {
 	start := time.Now()
+	requestURL, err := URLWithParams(req.URL, req.Params)
 
-	httpReq, err := http.NewRequest(req.Method, req.URL, bytes.NewBuffer(([]byte(req.Body))))
+	if err != nil {
+		return APIResponse{
+			Status: 0,
+			Body:   err.Error(),
+			Time:   0,
+			Size:   "0B",
+		}
+	}
+
+	httpReq, err := http.NewRequest(req.Method, requestURL, bytes.NewBuffer(([]byte(req.Body))))
 
 	if err != nil {
 		return APIResponse{

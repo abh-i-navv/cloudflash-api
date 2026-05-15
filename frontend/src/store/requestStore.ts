@@ -164,6 +164,6 @@ export const useRequestStore = create<RequestStore>((set) => ({
 
     //deleting history item
     deleteHistoryItem: (id: number) => set((state) => ({
-        history: state.history.filter((item) => item.ID !== id)
+        history: state.history.filter((item) => item.id !== id)
     }))
 }))

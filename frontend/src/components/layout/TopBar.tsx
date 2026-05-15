@@ -41,7 +41,7 @@ export default function TopBar() {
       
       const res = await SendRequest(req)
   
-      setResponseBody(res.Body)
+      setResponseBody(res.body)
       setResponseStatus(res.status)
       setResponseTime(res.time)
       setResponseSize(res.size)

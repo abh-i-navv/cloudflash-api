@@ -1,7 +1,7 @@
 package database
 
 type HistoryItem struct {
-	ID        int    `jsong:"id"`
+	ID        int    `json:"id"`
 	Method    string `json:"method"`
 	URL       string `json:"url"`
 	Body      string `json:"body"`

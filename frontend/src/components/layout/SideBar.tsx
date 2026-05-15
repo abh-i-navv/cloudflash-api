@@ -5,6 +5,8 @@ import React, { useEffect } from "react"
 import * as models from "../../../wailsjs/go/models"
 import {Trash2 } from "lucide-react"
 import {EventsOn} from "../../../wailsjs/runtime/runtime"
+import { ScrollArea, ScrollBar } from "../ui/scroll-area"
+import { Separator } from "../ui/separator"
 
 function getPathname(url: string) {
   try {
@@ -98,25 +100,29 @@ export default function SideBar() {
       <div className="p-4 overflow-hidden space-y-2 flex-1 flex flex-col">
 
           <Button className="w-full shrink-0" onClick={handleNewRequest}>+ New Request</Button>
-
-        <div className="mt-6 space-y-2 flex-1 overflow-y-auto min-h-0">
-          {history.map(
-            (item) => 
-            ( <div key={item.ID} onClick={() => loadHistoryItem(item) } 
-            className="group rounded-md border border-zinc-800 bg-zinc-900 px-3 py-3 cursor-pointer transition-colors hover:bg-zinc-800 " > 
-            <div className=" flex items-center gap-2 "> 
-              <div className=" text-xs font-semibold text-green-400 "> {item.method} </div> 
-              <div className="flex-1 break-all text-zinc-300 text-xs"> {getPathname(item.url)} </div> 
-              </div> 
-              <div className="flex justify-between">
-                <div className="mt-1 break-all text-xs text-zinc-500"> {getDomain(item.url)}</div> 
-                <div>
-                  <Button onClick={(e:any) => deleteHandler(item.ID, e)} className="opacity-0 transition-opacity group-hover:opacity-100 text-red-600" variant="destructive"><Trash2/></Button>
+          
+      <ScrollArea className="mt-6 space-y-2 flex-1 min-h-0 ">
+          {history.map((item) => (
+            <React.Fragment key={item.id}>
+              <div key={item.id} onClick={() => loadHistoryItem(item) } 
+              className="group rounded-md border border-zinc-800 bg-zinc-900 px-3 py-3 cursor-pointer transition-colors hover:bg-zinc-800 " > 
+              <div className=" flex items-center gap-2 "> 
+                <div className=" text-sm font-semibold text-green-400 "> {item.method} </div> 
+                <div className="flex-1 break-all text-zinc-300 text-sm"> {getPathname(item.url)} </div> 
+                </div> 
+                <div className="flex justify-between">
+                  <div className="mt-1 break-all text-xs text-zinc-500"> {getDomain(item.url)}</div> 
+                  <div>
+                    <Button onClick={(e:any) => deleteHandler(item.id, e)} className="opacity-0 transition-opacity group-hover:opacity-100 text-red-600" variant="destructive"><Trash2/></Button>
+                  </div>
                 </div>
               </div>
-            </div> ))}
-        </div>
-
+              
+              <Separator className="my-2" />
+            </React.Fragment>
+          ))}
+        <ScrollBar orientation="vertical" color="white"/>
+      </ScrollArea>
       </div>
     </aside>
   )
