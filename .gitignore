@@ -81,3 +81,4 @@ temp/
 .cache/
 .parcel-cache/
 .gocache/
+data/
