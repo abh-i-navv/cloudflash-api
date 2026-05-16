@@ -1,50 +1,42 @@
-import { useState } from "react"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { useRequestStore } from "@/store/requestStore"
 
-type Header = {
-  key: string
-  value: string
-}
-
 export default function HeadersEditor() {
-    // const [headers, setHeaders] = useState<Header[]>([{key: "", value: ""}])
+  const headers = useRequestStore((state) => state.headers)
+  const setHeaders = useRequestStore((state) => state.setHeaders)
 
-    const headers = useRequestStore((state) => state.headers)
-    const setHeaders = useRequestStore((state) => state.setHeaders) 
+  function updateHeader(index: number, field: "key" | "value", value: string) {
+    const newHeaders = [...headers]
 
-    function updateHeader(index: number, field: "key" | "value", value: string) {
-        const newHeaders = [...headers]
+    newHeaders[index] = { ...newHeaders[index], [field]: value }
+    setHeaders(newHeaders)
+  }
 
-        newHeaders[index] = {...newHeaders[index], [field]: value}
-        setHeaders(newHeaders)
-    }
+  function addHeader() {
+    const hasEmptyHeader = headers.some(
+      (header) =>
+        header.key.trim() === "" &&
+        header.value.trim() === ""
+    )
 
-    function addHeader(){
-        const hasEmptyHeader = headers.some(
-            (header) =>
-            header.key.trim() === "" &&
-            header.value.trim() === ""
-        )
+    if (hasEmptyHeader) return
+    setHeaders([...headers, { key: "", value: "" }])
+  }
 
-        if (hasEmptyHeader) return
-        setHeaders([...headers, {key: "", value:""}])
-    }
+  function removeHeader(index: number) {
+    setHeaders(headers.filter((_, i) => i !== index))
+  }
 
-    function removeHeader(index: number){
-        setHeaders(headers.filter((_,i) => i !== index))
-    }
+  return (
+    <div className="flex min-h-0 flex-col gap-3">
 
-    return (
-        <div className="flex min-h-0 flex-col gap-3">
-      
       {headers.map((header, index) => (
         <div
           key={index}
           className="flex gap-3 items-center"
         >
-          
+
           {/* Header Key */}
           <Input
             placeholder="Header Key"
@@ -84,5 +76,5 @@ export default function HeadersEditor() {
         + Add Header
       </Button>
     </div>
-    )
+  )
 }

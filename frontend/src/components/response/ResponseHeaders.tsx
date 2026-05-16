@@ -1,4 +1,4 @@
-import { useRequestStore } from "@/store/requestStore"
+import { useResponseStore } from "@/store/responseStore"
 
 const headers = {
     "content-type": "application/json",
@@ -7,13 +7,13 @@ const headers = {
 }
 
 export default function ResponseHeaders() {
-    const responseHeaders = useRequestStore((state) => state.responseHeaders)
+    const responseHeaders = useResponseStore((state) => state.responseHeaders)
 
     return (
         <div className="flex flex-col gap-3">
             {
-                responseHeaders.map( (header) => {
-                    return(<div className="flex items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-3">
+                responseHeaders.map((header, index) => {
+                    return (<div key={header.key || index} className="flex items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-3">
                         <div className="font-mono text-sm text-zinc-300">
                             {header.key}
                         </div>
@@ -21,7 +21,7 @@ export default function ResponseHeaders() {
                             {header.value}
                         </div>
                     </div>)
-                } )
+                })
             }
 
         </div>

@@ -20,9 +20,10 @@ func SaveHistory(method, url, body string) error {
 
 func GetHistory() ([]HistoryItem, error) {
 	query := `
-	SELECT id, method,url,body, created_at
+	SELECT id, method, url, body, created_at
 	FROM request_history
 	ORDER BY created_at DESC
+	LIMIT 100
 	`
 
 	rows, err := DB.Query(query)

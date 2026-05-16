@@ -1,11 +1,12 @@
 import { useRequestStore } from "@/store/requestStore"
+import { useResponseStore } from "@/store/responseStore"
 
 function getStatusText(status: number, error: string) {
-  if (error || status ===0) {
+  if (error || status === 0) {
     return "Request Failed"
   }
 
-  switch(status) {
+  switch (status) {
     case 200:
       return "200 OK"
 
@@ -38,27 +39,27 @@ function getStatusText(status: number, error: string) {
 
 export default function ResponseMeta() {
   //response state
-  const responseStatus = useRequestStore((state) => state.responseStatus)
-  const responseTime = useRequestStore((state) => state.responseTime)
-  const responseSize = useRequestStore((state) => state.responseSize)
+  const responseStatus = useResponseStore((state) => state.responseStatus)
+  const responseTime = useResponseStore((state) => state.responseTime)
+  const responseSize = useResponseStore((state) => state.responseSize)
 
   //error state
   const error = useRequestStore((state) => state.error)
   const isError = error || responseStatus >= 400 || responseStatus === 0
   return (
-      <div className="flex gap-3 text-sm mb-4">
-    
-    <div className={`"px-3 py-1 rounded-md border" ${isError ? "bg-red-500/10 text-red-400 border-red-500/20" : "bg-green-500/10 text-green-400 border-green-500/20" }`}>
-      {getStatusText(responseStatus, error)}
-    </div>
+    <div className="flex gap-3 text-sm mb-4">
 
-    <div className="px-3 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-400">
-      {responseTime}ms
-    </div>
+      <div className={`"px-3 py-1 rounded-md border" ${isError ? "bg-red-500/10 text-red-400 border-red-500/20" : "bg-green-500/10 text-green-400 border-green-500/20"}`}>
+        {getStatusText(responseStatus, error)}
+      </div>
 
-    <div className="px-3 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-400">
-      {responseSize}
+      <div className="px-3 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-400">
+        {responseTime}ms
+      </div>
+
+      <div className="px-3 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-400">
+        {responseSize}
+      </div>
     </div>
-  </div>
   )
 }

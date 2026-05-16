@@ -1,5 +1,5 @@
 # CloudFlash API
-
+![alt text](image.png)
 CloudFlash API is a desktop API client built with Wails, Go, React, and TypeScript. It lets you send HTTP requests, inspect responses, manage headers and query params, and keep a local request history.
 
 ## Features
@@ -87,6 +87,54 @@ Build the desktop app:
 wails build
 ```
 
+## Installers
+
+CloudFlash API is a Wails desktop app, so installers are typically created per platform on that platform's native OS.
+
+### Windows Installer
+
+This project already includes the Wails-generated NSIS installer files under `build/windows/installer`.
+
+1. Install [NSIS](https://nsis.sourceforge.io/Download).
+2. Build the app and installer:
+
+```powershell
+wails build -clean -nsis
+```
+
+This produces the packaged Windows app and NSIS installer in `build/bin`.
+
+### macOS Installer
+
+Build the macOS app bundle on a Mac:
+
+```bash
+wails build -clean
+```
+
+This creates a `.app` bundle. To distribute it more cleanly, wrap the app in a `.dmg` using macOS tools such as `hdiutil`.
+
+### Linux Packages
+
+Build the Linux app on Linux:
+
+```bash
+wails build -clean
+```
+
+The resulting binary can then be packaged as:
+
+- `AppImage` for portable distribution
+- `.deb` for Debian/Ubuntu
+- `.rpm` for Fedora/RHEL-based systems
+
+### Recommended Release Flow
+
+- Build Windows installers on Windows
+- Build macOS bundles/DMGs on macOS
+- Build Linux binaries/packages on Linux
+- Use GitHub Actions later if you want automated release builds for all platforms
+
 ## How It Works
 
 When you send a request:
@@ -135,4 +183,3 @@ Desktop app:
 wails dev
 wails build
 ```
-
