@@ -9,9 +9,7 @@ import (
 	"net/http"
 	"time"
 
-	_ "github.com/wailsapp/wails/runtime"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
-	_ "github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 // App struct

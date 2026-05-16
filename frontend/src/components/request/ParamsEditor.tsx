@@ -1,16 +1,10 @@
-import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useRequestStore } from "@/store/requestStore"
 
-type Param = {
-  key: string
-  value: string
-}
 
 export default function ParamsEditor() {
-  // const [params, setParams] = useState<Param[]>([])
-  
+
   const params = useRequestStore((state) => state.params)
   const setParams = useRequestStore((state) => state.setParams)
 
@@ -22,7 +16,7 @@ export default function ParamsEditor() {
     const newParams = [...params]
 
     newParams[index] = {
-      ...newParams[index],[field]: value,
+      ...newParams[index], [field]: value,
     }
     setParams(newParams)
   }
@@ -43,18 +37,18 @@ export default function ParamsEditor() {
   }
 
   function removeParam(index: number) {
-    setParams(params.filter((_,i) => i!== index))
+    setParams(params.filter((_, i) => i !== index))
   }
 
   return (
     <div className="flex flex-col gap-3">
-      
+
       {params.map((param, index) => (
         <div
           key={index}
           className="flex gap-3 items-center"
         >
-          
+
           <Input
             placeholder="Param Key"
             value={param.key}
