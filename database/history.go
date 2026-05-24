@@ -47,6 +47,12 @@ func GetHistory() ([]HistoryItem, error) {
 
 		history = append(history, item)
 	}
+
+	// Ensure an empty array instead of nil is returned
+	if history == nil {
+		history = []HistoryItem{}
+	}
+
 	return history, nil
 }
 
