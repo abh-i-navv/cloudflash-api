@@ -21,16 +21,19 @@ export default function ResponseTabs() {
   const [activeTab, setActiveTab] = useState("body")
 
   const copyToClipboard = async () => {
-    if (activeTab === "body") {
-      await navigator.clipboard.writeText(responseBody)
-      toast("Response copied to the clipboard", { position: "bottom-right", className: "!bg-emerald-700 !text-white !border-emerald-600", duration: 800 })
-    }
-    else if (activeTab === "headers") {
-      await navigator.clipboard.writeText(JSON.stringify(responseHeaders))
-      toast("Headers copied to the clipboard", { position: "bottom-right", className: "!bg-emerald-700 !text-white !border-emerald-600", duration: 800 })
+    try {
+      if (activeTab === "body") {
+        await navigator.clipboard.writeText(responseBody)
+        toast("Response copied to the clipboard", { position: "bottom-right", className: "!bg-emerald-700 !text-white !border-emerald-600", duration: 800 })
+      }
+      else if (activeTab === "headers") {
+        await navigator.clipboard.writeText(JSON.stringify(responseHeaders))
+        toast("Headers copied to the clipboard", { position: "bottom-right", className: "!bg-emerald-700 !text-white !border-emerald-600", duration: 800 })
+      }
+    } catch (error) {
+      toast.error("failed to copy")
     }
   }
-
 
   return (
     <Tabs

@@ -49,15 +49,15 @@ export default function ResponseMeta() {
   return (
     <div className="flex gap-3 text-sm mb-4">
 
-      <div className={`"px-3 py-1 rounded-md border" ${isError ? "bg-red-500/10 text-red-400 border-red-500/20" : "bg-green-500/10 text-green-400 border-green-500/20"}`}>
+      <div className={`"px-3 p-2 rounded-md border" ${isError ? "bg-red-500/10 text-red-400 border-red-500/20" : "bg-green-500/10 text-green-400 border-green-500/20"}`}>
         {getStatusText(responseStatus, error)}
       </div>
 
-      <div className="px-3 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-400">
+      <div className="px-3 p-2 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-400">
         {responseTime}ms
       </div>
 
-      <div className="px-3 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-400">
+      <div className="px-3 p-2 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-400">
         {responseSize}
       </div>
     </div>
