@@ -4,10 +4,12 @@ import RequestTabs from './components/request/RequestTabs';
 import SideBar from './components/layout/SideBar';
 import ResponseMeta from './components/response/ResponseMeta';
 import ResponseTabs from './components/response/ResponseTabs';
+import { Toaster } from "sonner"
 
 function App() {
     return (
         <div className="h-screen w-screen overflow-hidden bg-zinc-950 text-white">
+            <Toaster position="bottom-right" richColors closeButton />
             <div className="flex h-full min-h-0">
                 <SideBar />
 
