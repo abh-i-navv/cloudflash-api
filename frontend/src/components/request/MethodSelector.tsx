@@ -1,23 +1,18 @@
-import { useRequestStore } from "@/store/requestStore"
-
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useActiveDraft, useUpdateActiveDraft } from "@/store/selectors/draftSelectors"
 
 export default function MethodSelector() {
-
-  const method = useRequestStore((state) => state.method)
-
-  const setMethod = useRequestStore((state) => state.setMethod)
+  const draft = useActiveDraft()
+  const updateDraft = useUpdateActiveDraft()
 
   return (
-    <Select value={method} onValueChange={setMethod}>
+    <Select value={draft?.method ?? "GET"} onValueChange={(value) => updateDraft({method: value})}>
       <SelectTrigger className="w-24 ">
         <SelectValue />
       </SelectTrigger>

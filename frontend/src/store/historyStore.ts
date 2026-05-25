@@ -1,16 +1,15 @@
 import { create } from "zustand"
 import * as models from "../../wailsjs/go/models"
 import { api } from "@/services/api"
-import { DeleteHistoryItem } from "wailsjs/go/main/App"
 
 type HistoryStore = {
     //history
-    history: models.database.HistoryItem[]
+    history: models.domain.HistoryItem[]
 
-    setHistory: (history: models.database.HistoryItem[]) => void
+    setHistory: (history: models.domain.HistoryItem[]) => void
 
     //inserting history item
-    addHistoryItem: (item: models.database.HistoryItem) => void
+    addHistoryItem: (item: models.domain.HistoryItem) => void
 
     //deleting history item from UI
     deleteHistoryItemUI: (id: number) => void

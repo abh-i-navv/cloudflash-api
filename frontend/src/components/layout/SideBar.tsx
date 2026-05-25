@@ -1,6 +1,5 @@
-import { useRequestStore } from "@/store/requestStore"
 import { Button } from "../ui/button"
-import React, { useCallback, useEffect, useMemo } from "react"
+import React, { useCallback, useEffect } from "react"
 import * as models from "../../../wailsjs/go/models"
 import { Trash2 } from "lucide-react"
 import { EventsOn } from "../../../wailsjs/runtime/runtime"
@@ -8,14 +7,15 @@ import { useShallow } from "zustand/react/shallow"
 import { useHistoryStore } from "@/store/historyStore"
 import { getDomain, getPathname } from "@/lib/utils"
 import { api } from "@/services/api"
+import { useTabsStore } from "@/store/tabsStore"
 
 const HistoryCard = React.memo(function HistoryCard({
   item,
   onLoad,
   onDelete,
 }: {
-  item: models.database.HistoryItem
-  onLoad: (item: models.database.HistoryItem) => void
+  item: models.domain.HistoryItem
+  onLoad: (item: models.domain.HistoryItem) => void
   onDelete: (e: React.MouseEvent, id: number) => void
 }) {
   return (
@@ -44,14 +44,7 @@ const HistoryCard = React.memo(function HistoryCard({
 })
 
 export default function SideBar() {
-  const { setMethod, setUrl, setBody, } =
-    useRequestStore(
-      useShallow((state) => ({
-        setMethod: state.setMethod,
-        setUrl: state.setUrl,
-        setBody: state.setBody,
-      }))
-    )
+  const createTab = useTabsStore((state) => state.createTab)
 
   const { history, setHistory } = useHistoryStore(
     useShallow((state) => ({
@@ -63,12 +56,14 @@ export default function SideBar() {
   const refreshHistory = useHistoryStore((state) => state.refreshHistory)
 
   const loadHistoryItem = useCallback(
-    (item: models.database.HistoryItem) => {
-      setMethod(item.method)
-      setUrl(item.url)
-      setBody(item.body)
+    (item: models.domain.HistoryItem) => {
+      createTab({
+        method: item.method,
+        url: item.url,
+        body: item.body,
+      })
     },
-    [setMethod, setUrl, setBody]
+    [createTab]
   )
 
   const deleteHistoryItemDB = useHistoryStore((state) => state.deleteHistoryItemDB)
@@ -79,10 +74,8 @@ export default function SideBar() {
   }
 
   const handleNewRequest = useCallback(() => {
-    setBody("")
-    setMethod("GET")
-    setUrl("")
-  }, [setBody, setMethod, setUrl])
+    createTab()
+  }, [createTab])
 
   useEffect(() => {
     const unsubscribe = EventsOn("history_updated", async () => {

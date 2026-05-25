@@ -1,13 +1,7 @@
-import { useResponseStore } from "@/store/responseStore"
-
-const headers = {
-    "content-type": "application/json",
-    "cache-control": "no-cache",
-    "server": "nginx",
-}
+import { useActiveResponse } from "@/store/selectors/draftSelectors"
 
 export default function ResponseHeaders() {
-    const responseHeaders = useResponseStore((state) => state.responseHeaders)
+    const responseHeaders = useActiveResponse()?.headers ?? []
 
     return (
         <div className="flex flex-col gap-3">

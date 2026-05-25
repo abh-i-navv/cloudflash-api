@@ -34,7 +34,7 @@ function JsonEditorInner({
         height="100%"
         theme={oneDark}
         extensions={extensions}
-        onChange={onChange}
+        onChange={(value) => onChange?.(value)}
         basicSetup={BASIC_SETUP}
       />
     </div>

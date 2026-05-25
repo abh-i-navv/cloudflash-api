@@ -9,25 +9,23 @@ import ResponseViewer from "./ResponseViewer"
 import ResponseHeaders from "./ResponseHeaders"
 import { Button } from "../ui/button"
 import { Copy } from "lucide-react"
-import { useResponseStore } from "@/store/responseStore"
 import { useState } from "react"
 import { toast } from "sonner"
+import { useActiveResponse } from "@/store/selectors/draftSelectors"
 
 export default function ResponseTabs() {
-
-  const responseBody = useResponseStore((state) => state.responseBody)
-  const responseHeaders = useResponseStore((state) => state.responseHeaders)
+  const response = useActiveResponse()
 
   const [activeTab, setActiveTab] = useState("body")
 
   const copyToClipboard = async () => {
     try {
       if (activeTab === "body") {
-        await navigator.clipboard.writeText(responseBody)
+        await navigator.clipboard.writeText(response?.body ?? "")
         toast("Response copied to the clipboard", { position: "bottom-right", className: "!bg-emerald-700 !text-white !border-emerald-600", duration: 800 })
       }
       else if (activeTab === "headers") {
-        await navigator.clipboard.writeText(JSON.stringify(responseHeaders))
+        await navigator.clipboard.writeText(JSON.stringify(response?.headers ?? []))
         toast("Headers copied to the clipboard", { position: "bottom-right", className: "!bg-emerald-700 !text-white !border-emerald-600", duration: 800 })
       }
     } catch (error) {

@@ -1,5 +1,4 @@
-import { useRequestStore } from "@/store/requestStore"
-import { useResponseStore } from "@/store/responseStore"
+import { useActiveError, useActiveResponse } from "@/store/selectors/draftSelectors"
 
 function getStatusText(status: number, error: string) {
   if (error || status === 0) {
@@ -38,13 +37,11 @@ function getStatusText(status: number, error: string) {
 }
 
 export default function ResponseMeta() {
-  //response state
-  const responseStatus = useResponseStore((state) => state.responseStatus)
-  const responseTime = useResponseStore((state) => state.responseTime)
-  const responseSize = useResponseStore((state) => state.responseSize)
-
-  //error state
-  const error = useRequestStore((state) => state.error)
+  const response = useActiveResponse()
+  const error = useActiveError()
+  const responseStatus = response?.status ?? 0
+  const responseTime = response?.time ?? 0
+  const responseSize = response?.size ?? "0B"
   const isError = error || responseStatus >= 400 || responseStatus === 0
   return (
     <div className="flex gap-3 text-sm mb-4">

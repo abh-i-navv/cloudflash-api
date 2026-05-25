@@ -1,11 +1,9 @@
 import JsonEditor from "./JsonEditor";
-import { useRequestStore } from "@/store/requestStore";
+import { useActiveDraft, useUpdateActiveDraft } from "@/store/selectors/draftSelectors";
 
 export default function BodyEditor() {
-
-    const body = useRequestStore((state) => state.body)
-
-    const setBody = useRequestStore((state) => state.setBody)
+    const draft = useActiveDraft()
+    const updateDraft = useUpdateActiveDraft()
 
     return (
         <div className="flex h-full min-h-0 flex-1 flex-col overflow-hidden">
@@ -14,7 +12,7 @@ export default function BodyEditor() {
             </div>
 
             <div className="min-h-0 flex-1 overflow-hidden rounded-md border border-zinc-800 bg-zinc-950">
-                <JsonEditor value={body} onChange={setBody} />
+                <JsonEditor value={draft?.body ?? ""} onChange={(body) => updateDraft({ body })} />
             </div>
         </div>
     )

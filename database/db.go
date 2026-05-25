@@ -25,6 +25,21 @@ func createTables() {
 		created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 	);
 	CREATE INDEX IF NOT EXISTS idx_history_created_at ON request_history(created_at DESC);
+
+	CREATE TABLE IF NOT EXISTS tabs(
+		id TEXT PRIMARY KEY,
+		title TEXT NOT NULL,
+		method TEXT NOT NULL,
+		url TEXT NOT NULL,
+		body TEXT,
+		headers TEXT,       
+		params TEXT,          
+		response TEXT,         
+		position INTEGER NOT NULL,
+		is_active INTEGER NOT NULL DEFAULT 0,
+		created_at INTEGER NOT NULL,
+		updated_at INTEGER NOT NULL
+	);
 	`
 
 	_, err := DB.Exec(query)
@@ -64,7 +79,7 @@ func InitDB() {
 	pragmas := []string{
 		"PRAGMA journal_mode=WAL",
 		"PRAGMA synchronous=NORMAL",
-		"PRAGMA cache_size=-8000",   // 8MB cache
+		"PRAGMA cache_size=-8000",    // 8MB cache
 		"PRAGMA mmap_size=268435456", // 256MB mmap
 		"PRAGMA busy_timeout=5000",
 	}
