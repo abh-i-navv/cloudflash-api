@@ -14,8 +14,8 @@ const HistoryCard = React.memo(function HistoryCard({
   onLoad,
   onDelete,
 }: {
-  item: models.database.HistoryItem
-  onLoad: (item: models.database.HistoryItem) => void
+  item: models.domain.HistoryItem
+  onLoad: (item: models.domain.HistoryItem) => void
   onDelete: (e: React.MouseEvent, id: number) => void
 }) {
   return (
@@ -56,7 +56,7 @@ export default function SideBar() {
   const refreshHistory = useHistoryStore((state) => state.refreshHistory)
 
   const loadHistoryItem = useCallback(
-    (item: models.database.HistoryItem) => {
+    (item: models.domain.HistoryItem) => {
       createTab({
         method: item.method,
         url: item.url,

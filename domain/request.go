@@ -1,4 +1,4 @@
-package main
+package domain
 
 import "net/url"
 
@@ -36,10 +36,10 @@ type APIResponse struct {
 
 func URLWithParams(rawURL string, params []Param) (string, error) {
 	parsedURL, err := url.Parse(rawURL)
-
 	if err != nil {
 		return "", err
 	}
+
 	query := parsedURL.Query()
 	for _, param := range params {
 		if param.Key == "" {
@@ -50,6 +50,5 @@ func URLWithParams(rawURL string, params []Param) (string, error) {
 	}
 
 	parsedURL.RawQuery = query.Encode()
-
 	return parsedURL.String(), nil
 }

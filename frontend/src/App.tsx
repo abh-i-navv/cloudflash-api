@@ -16,8 +16,16 @@ import {
   ResizablePanelGroup,
 } from "./components/ui/resizable"
 import RequestMultiTabs from "./components/request/RequestMultiTab"
+import { useEffect } from "react"
+import { useTabsStore } from "./store/tabsStore"
 
 function App() {
+  const loadTabsState = useTabsStore((state) => state.loadTabsState)
+
+  useEffect(() => {
+    loadTabsState()
+  }, [loadTabsState])
+
   return (
     <div className="h-screen w-screen overflow-hidden bg-zinc-950 text-white">
         <Toaster position="bottom-right" richColors closeButton />

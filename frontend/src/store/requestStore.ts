@@ -84,7 +84,7 @@ export const useRequestStore = create<RequestStore>((set, get) => ({
 
         try {
             set({ error: "", loading: true })
-            const req = new models.main.APIRequest({
+            const req = new models.domain.APIRequest({
                 method,
                 url,
                 body,

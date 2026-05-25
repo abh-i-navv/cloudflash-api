@@ -1,12 +1,6 @@
 package database
 
-type HistoryItem struct {
-	ID        int    `json:"id"`
-	Method    string `json:"method"`
-	URL       string `json:"url"`
-	Body      string `json:"body"`
-	CreatedAt string `json:"created_at"`
-}
+import "cloudflash-api/domain"
 
 func SaveHistory(method, url, body string) error {
 	query := `
@@ -18,7 +12,7 @@ func SaveHistory(method, url, body string) error {
 	return err
 }
 
-func GetHistory() ([]HistoryItem, error) {
+func GetHistory() ([]domain.HistoryItem, error) {
 	query := `
 	SELECT id, method, url, body, created_at
 	FROM request_history
@@ -27,20 +21,17 @@ func GetHistory() ([]HistoryItem, error) {
 	`
 
 	rows, err := DB.Query(query)
-
 	if err != nil {
 		return nil, err
 	}
 
 	defer rows.Close()
 
-	var history []HistoryItem
-
+	var history []domain.HistoryItem
 	for rows.Next() {
-		var item HistoryItem
+		var item domain.HistoryItem
 
 		err := rows.Scan(&item.ID, &item.Method, &item.URL, &item.Body, &item.CreatedAt)
-
 		if err != nil {
 			return nil, err
 		}
@@ -48,9 +39,8 @@ func GetHistory() ([]HistoryItem, error) {
 		history = append(history, item)
 	}
 
-	// Ensure an empty array instead of nil is returned
 	if history == nil {
-		history = []HistoryItem{}
+		history = []domain.HistoryItem{}
 	}
 
 	return history, nil
