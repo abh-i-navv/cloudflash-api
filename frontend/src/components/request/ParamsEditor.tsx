@@ -1,12 +1,15 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { useRequestStore } from "@/store/requestStore"
-
+import { useActiveDraft, useUpdateActiveDraft } from "@/store/selectors/draftSelectors"
+import { Param } from "@/types/global"
+import { X } from "lucide-react"
 
 export default function ParamsEditor() {
+  const draft = useActiveDraft()
+  const updateDraft = useUpdateActiveDraft()
+  const params = draft?.params ?? []
 
-  const params = useRequestStore((state) => state.params)
-  const setParams = useRequestStore((state) => state.setParams)
+  const setParams = (params: Param[]) => updateDraft({ params })
 
   function updateParam(
     index: number,
@@ -42,13 +45,11 @@ export default function ParamsEditor() {
 
   return (
     <div className="flex flex-col gap-3">
-
       {params.map((param, index) => (
         <div
           key={index}
           className="flex gap-3 items-center"
         >
-
           <Input
             placeholder="Param Key"
             value={param.key}
@@ -77,9 +78,10 @@ export default function ParamsEditor() {
 
           <Button
             variant="destructive"
+            size="icon"
             onClick={() => removeParam(index)}
           >
-            ×
+            <X />
           </Button>
         </div>
       ))}

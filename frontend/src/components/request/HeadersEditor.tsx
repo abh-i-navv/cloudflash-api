@@ -1,10 +1,15 @@
+import { useActiveDraft, useUpdateActiveDraft } from "@/store/selectors/draftSelectors"
+import { Header } from "@/types/global"
+import { X } from "lucide-react"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
-import { useRequestStore } from "@/store/requestStore"
 
 export default function HeadersEditor() {
-  const headers = useRequestStore((state) => state.headers)
-  const setHeaders = useRequestStore((state) => state.setHeaders)
+  const draft = useActiveDraft()
+  const updateDraft = useUpdateActiveDraft()
+  const headers = draft?.headers ?? []
+
+  const setHeaders = (headers: Header[]) => updateDraft({ headers })
 
   function updateHeader(index: number, field: "key" | "value", value: string) {
     const newHeaders = [...headers]
@@ -30,14 +35,11 @@ export default function HeadersEditor() {
 
   return (
     <div className="flex min-h-0 flex-col gap-3">
-
       {headers.map((header, index) => (
         <div
           key={index}
           className="flex gap-3 items-center"
         >
-
-          {/* Header Key */}
           <Input
             placeholder="Header Key"
             value={header.key}
@@ -47,7 +49,6 @@ export default function HeadersEditor() {
             className="bg-zinc-900 border-zinc-800"
           />
 
-          {/* Header Value */}
           <Input
             placeholder="Header Value"
             value={header.value}
@@ -57,17 +58,16 @@ export default function HeadersEditor() {
             className="bg-zinc-900 border-zinc-800"
           />
 
-          {/* Remove Button */}
           <Button
             variant="destructive"
+            size="icon"
             onClick={() => removeHeader(index)}
           >
-            ×
+            <X />
           </Button>
         </div>
       ))}
 
-      {/* Add Header */}
       <Button
         variant="secondary"
         className="w-fit"

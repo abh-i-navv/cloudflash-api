@@ -1,11 +1,10 @@
-import { useRequestStore } from "@/store/requestStore"
 import JsonEditor from "../request/JsonEditor"
 import { Loader } from "lucide-react"
-import { useResponseStore } from "@/store/responseStore"
+import { useActiveLoading, useActiveResponse } from "@/store/selectors/draftSelectors"
 
 export default function ResponseViewer() {
-    const responseBody = useResponseStore((state) => state.responseBody)
-    const loading = useRequestStore((state) => state.loading)
+    const response = useActiveResponse()
+    const loading = useActiveLoading()
 
     return (
         loading ? (
@@ -13,7 +12,7 @@ export default function ResponseViewer() {
                 <Loader />
             </div>
         ) : (<div className="flex-1 min-h-0 ">
-            <JsonEditor value={responseBody} editable={false} />
+            <JsonEditor value={response?.body ?? ""} editable={false} />
         </div>))
 
 }

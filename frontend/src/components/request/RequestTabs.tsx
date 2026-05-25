@@ -10,15 +10,15 @@ import ParamsEditor from "./ParamsEditor"
 import { useState } from "react"
 
 export default function RequestTabs() {
-    const [activeTab, setActiveTab] = useState<string>("headers")
+    const [active, setActive] = useState<string>("headers")
 
     return (
-        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value)} className="flex min-h-0 flex-1 flex-col overflow-hidden">
+        <Tabs value={active} onValueChange={(value) => setActive(value)} className="flex min-h-0 flex-1 flex-col overflow-hidden">
 
             <TabsList className="w-fit shrink-0 border border-zinc-800 bg-zinc-950">
-                <TabsTrigger value="headers" className={`${activeTab == "headers" ? "bg-zinc-700" : ""}`}>Headers</TabsTrigger>
-                <TabsTrigger value="body" className={`${activeTab == "body" ? "bg-zinc-700" : ""}`}>Body</TabsTrigger>
-                <TabsTrigger value="params" className={`${activeTab == "params" ? "bg-zinc-700" : ""}`}>Params</TabsTrigger>
+                <TabsTrigger value="headers" className={`${active == "headers" ? "bg-zinc-700" : ""}`}>Headers</TabsTrigger>
+                <TabsTrigger value="body" className={`${active == "body" ? "bg-zinc-700" : ""}`}>Body</TabsTrigger>
+                <TabsTrigger value="params" className={`${active == "params" ? "bg-zinc-700" : ""}`}>Params</TabsTrigger>
             </TabsList>
 
             <TabsContent value="headers" className="mt-4 min-h-0 flex-1 overflow-hidden">

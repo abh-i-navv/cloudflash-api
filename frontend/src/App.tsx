@@ -15,6 +15,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "./components/ui/resizable"
+import RequestMultiTabs from "./components/request/RequestMultiTab"
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
             <SideBar />
 
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-          <TopBar />
+            <RequestMultiTabs />
+            <TopBar />
 
           <main className="flex min-h-0 min-w-0 flex-1 overflow-hidden p-4">
             <ResizablePanelGroup
@@ -36,10 +38,9 @@ function App() {
               {/* Request Panel */}
               <ResizablePanel defaultSize={"50%"} minSize={"20%"}>
                 <section className="flex h-full min-h-0 flex-col overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900">
-                  <div className="border-b border-zinc-800 px-4 py-3">
-                    <h2 className="text-sm font-medium">Request</h2>
-                  </div>
-
+                  {/* <div className="border-b border-zinc-800 px-4 py-3"> */}
+                    {/* <h2 className="text-sm font-medium">Request</h2> */}
+                  {/* </div> */}
                   <div className="flex min-h-0 flex-1 flex-col overflow-auto p-4">
                     <RequestTabs />
                   </div>
