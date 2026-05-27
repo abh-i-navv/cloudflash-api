@@ -1,5 +1,6 @@
 import { Button } from "../ui/button"
-import React, { useCallback, useEffect } from "react"
+import React, { useCallback, useEffect, useState } from "react"
+import CollectionsPanel from "../workspace/CollectionsPanel"
 import * as models from "../../../wailsjs/go/models"
 import { Trash2 } from "lucide-react"
 import { EventsOn } from "../../../wailsjs/runtime/runtime"
@@ -45,6 +46,7 @@ const HistoryCard = React.memo(function HistoryCard({
 
 export default function SideBar() {
   const createTab = useTabsStore((state) => state.createTab)
+  const [activeTab, setActiveTab] = useState<"history" | "collections">("history")
 
   const { history, setHistory } = useHistoryStore(
     useShallow((state) => ({
@@ -89,27 +91,65 @@ export default function SideBar() {
   }, [refreshHistory, setHistory])
 
   return (
-    <aside className="flex h-full w-[20%] min-w-[180px]  max-w-[260px] shrink-0 flex-col overflow-hidden border-r border-zinc-800 bg-zinc-900">
+    <aside className="flex h-full w-full flex-col overflow-hidden border-r border-zinc-800 bg-zinc-900">
 
       {/* Sidebar Header */}
-      <div className="h-14 border-b border-zinc-800 flex items-center px-4">
-        <h1 className="text-lg font-semibold">CloudFlash</h1>
+      <div className="h-14 border-b border-zinc-800 flex items-center px-4 shrink-0">
+        <h1 className="text-lg font-semibold text-zinc-100 flex items-center gap-2">
+          <span>CloudFlash</span>
+        </h1>
       </div>
 
       {/* Sidebar Content */}
-      <div className="p-4 overflow-hidden space-y-2 flex-1 flex flex-col">
+      <div className="p-4 overflow-hidden space-y-4 flex-1 flex flex-col">
 
         <Button className="w-full shrink-0" onClick={handleNewRequest}>+ New Request</Button>
-        <div className="mt-6 space-y-2 flex-1 min-h-0 overflow-y-auto custom-scrollbar">
 
-          {history.map((item) => (
-            <HistoryCard
-              key={item.id}
-              item={item}
-              onLoad={loadHistoryItem}
-              onDelete={deleteHandler}
-            />
-          ))}
+        {/* Sleek Tab Switcher */}
+        <div className="flex border border-zinc-800 p-0.5 bg-zinc-950/40 rounded-lg shrink-0">
+          <button
+            onClick={() => setActiveTab("collections")}
+            className={`flex-1 py-1.5 text-xs font-medium rounded-md transition-all ${activeTab === "collections"
+                ? "bg-zinc-800 text-white shadow-sm font-semibold"
+                : "text-zinc-400 hover:text-zinc-200"
+              }`}
+          >
+            Collections
+          </button>
+          <button
+            onClick={() => setActiveTab("history")}
+            className={`flex-1 py-1.5 text-xs font-medium rounded-md transition-all ${activeTab === "history"
+                ? "bg-zinc-800 text-white shadow-sm font-semibold"
+                : "text-zinc-400 hover:text-zinc-200"
+              }`}
+          >
+            History
+          </button>
+
+        </div>
+
+        {/* Tab Content */}
+        <div className="flex-1 min-h-0 flex flex-col overflow-hidden">
+          {activeTab === "history" ? (
+            <div className="space-y-2 flex-1 overflow-y-auto custom-scrollbar pr-1">
+              {history.length > 0 ? (
+                history.map((item) => (
+                  <HistoryCard
+                    key={item.id}
+                    item={item}
+                    onLoad={loadHistoryItem}
+                    onDelete={deleteHandler}
+                  />
+                ))
+              ) : (
+                <div className="text-center text-xs text-zinc-500 py-8">
+                  No request history yet
+                </div>
+              )}
+            </div>
+          ) : (
+            <CollectionsPanel />
+          )}
         </div>
       </div>
     </aside>

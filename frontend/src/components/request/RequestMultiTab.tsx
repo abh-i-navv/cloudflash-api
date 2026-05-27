@@ -87,15 +87,12 @@ export default function RequestMultiTabs() {
                         onPointerMove={handlePointerMove}
                         onPointerUp={handlePointerUp}
                         onPointerCancel={handlePointerCancel}
-                        className={`flex items-center gap-2 pl-4 pr-1 py-2 border-r border-zinc-800
+                        className={`flex items-center gap-2 pl-4 pr-1 py-2 border-r rounded-r-md border-zinc-800
                             cursor-pointer select-none touch-none min-w-[140px] max-w-[220px] group
                             transition-[transform,opacity,background-color,box-shadow,border-color] duration-200 ease-out
-                            hover:-translate-y-0.5 ${
-                                isActive ? "bg-zinc-900 text-white" : "bg-zinc-950 text-zinc-400 hover:bg-zinc-900/50"
-                            } ${
-                                draggedTabId === tab.id ? "scale-95 opacity-40 shadow-2xl" : ""
-                            } ${
-                                dropTargetId === tab.id && draggedTabId !== tab.id ? "scale-[1.02] border-zinc-500 shadow-lg shadow-black/20" : ""
+                            hover:-translate-y-0.5 ${isActive ? "bg-zinc-900 text-white" : "bg-zinc-950 text-zinc-400 hover:bg-zinc-900/50"
+                            } ${draggedTabId === tab.id ? "scale-95 opacity-40 shadow-2xl" : ""
+                            } ${dropTargetId === tab.id && draggedTabId !== tab.id ? "scale-[1.02] border-zinc-500 shadow-lg shadow-black/20" : ""
                             }`}>
                         <span className="truncate flex-1 text-sm">{tab.title}</span>
                         {
