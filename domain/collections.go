@@ -1,0 +1,31 @@
+package domain
+
+type Collection struct {
+	ID        string `json:"id"`
+	Name      string `json:"name"`
+	CreatedAt int64  `json:"created_at"`
+	UpdatedAt int64  `json:"updated_at"`
+}
+
+type Folder struct {
+	ID             string  `json:"id"`
+	CollectionID   string  `json:"collection_id"`
+	ParentFolderID *string `json:"parent_folder_id"`
+	Name           string  `json:"name"`
+	CreatedAt      int64   `json:"created_at"`
+	UpdatedAt      int64   `json:"updated_at"`
+}
+
+type SavedRequest struct {
+	ID           string  `json:"id"`
+	CollectionID string  `json:"collection_id"`
+	FolderID     *string `json:"folder_id"`
+	Name         string  `json:"name"`
+	Method       string  `json:"method"`
+	URL          string  `json:"url"`
+	Body         string  `json:"body"`
+	Headers      string  `json:"headers"`
+	Params       string  `json:"params"`
+	CreatedAt    int64   `json:"created_at"`
+	UpdatedAt    int64   `json:"updated_at"`
+}
