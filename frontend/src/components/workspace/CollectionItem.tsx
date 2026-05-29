@@ -1,6 +1,10 @@
 import { Collection, useCollectionsStore } from "@/store/CollectionsStore";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Folder, FolderOpen, FolderPlus, Pencil, Trash2 } from "lucide-react";
 import React, { useState } from "react";
+import InlineRenameInput from "./InlineRenameInput";
+import FolderItem from "./FolderItem";
+import SaveRequestItem from "./SavedRequestItem";
+import SavedRequestItem from "./SavedRequestItem";
 
 function CollectionItem({collection} : {collection: Collection}) {
     const [renaming, setRenaming] = useState(false)
@@ -109,7 +113,78 @@ function CollectionItem({collection} : {collection: Collection}) {
                     className={`shrink-0 text-zinc-400 transition-transform duration-200
                         ${isExpanded ?  "rotate-90" : ""}`}
                 />
-                    
+                {isExpanded ? 
+                    <FolderOpen size={15} className="shrink-0 text-blue-400"/>
+                    : <Folder size={15} className="shrink-0 text-blue-400/80"/>
+                }
+
+                {renaming ? 
+                    <InlineRenameInput initialValue={collection.name}
+                        onSave={handleRename}
+                        onCancel={() => setRenaming(false)}/>
+                    : (
+                        <span className="text-sm font-semibold text-zinc-200 truncate flex-1 ml-0.5">
+                            {collection.name}
+                        </span>
+                    )
+                }
+
+                {/* Actions */}
+                
+                {
+                    !renaming && (
+                        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+                            <button onClick={handleAddFolder} 
+                                className="text-zinc-600 hover:text-white p-0.5"
+                                title="Add Folder">
+                                <FolderPlus size={13}/>
+                            </button>
+                            <button
+                                onClick={(e) => { e.stopPropagation(); setRenaming(true) }}
+                                className="text-zinc-500 hover:text-white p-0.5"
+                                title="Rename Collection"
+                            >
+                            <Pencil size={13} />
+                                </button>
+                            <button
+                                    onClick={handleDelete}
+                                    className="text-zinc-500 hover:text-red-400 p-0.5"
+                                    title="Delete Collection"
+                                >
+                                    <Trash2 size={13} />
+                            </button>
+                        </div>
+                    )
+                }
+
+                {/* Sub-items */}
+                {isExpanded && (
+                    <div className="pl-2">
+                        {creatingFolder && (
+                            <div className="pl-6 py-1">
+                                <InlineRenameInput
+                                    initialValue="New Folder"
+                                    onSave={handleCreateFolder}
+                                    onCancel={() => setCreatingFolder(false)}
+                                />
+                            </div>
+                        )}
+
+                        {rootFolders.map((folder) => (
+                            <FolderItem key={folder.id} folder={folder} depth={1} />
+                        ))}
+
+                        {rootRequests.map((req) => (
+                            <SavedRequestItem key={req.id} request={req} depth={1} />
+                        ))}
+
+                        {rootFolders.length === 0 && rootRequests.length === 0 && !creatingFolder && (
+                            <div className="pl-6 text-xs text-zinc-600 py-1.5 italic">
+                                Empty Collection
+                            </div>
+                        )}
+                    </div>
+                )}
 
             </div>
 
@@ -117,3 +192,5 @@ function CollectionItem({collection} : {collection: Collection}) {
         </div>
     )
 }
+
+export default React.memo(CollectionItem)
