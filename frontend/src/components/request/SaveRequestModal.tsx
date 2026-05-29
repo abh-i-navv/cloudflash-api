@@ -92,7 +92,8 @@ export default function SaveRequestModal({ isOpen, onClose, draft }: SaveRequest
                 // To keep it simple, let's create it first, then search the store collections
                 // Or better, let the user create collection in the sidebar as standard, 
                 // but if we do it here, let's wait for state to update
-                toast.success(`Created collection "${cleanName}"`)
+                
+                toast(`Created collection "${cleanName}"`, { position: "bottom-right", className: "!bg-emerald-700 !text-white !border-emerald-600", duration: 1000 })
             } catch (err) {
                 toast.error("Failed to create collection")
                 return
@@ -126,7 +127,9 @@ export default function SaveRequestModal({ isOpen, onClose, draft }: SaveRequest
 
         try {
             await saveRequest(collectionId, selectedFolderId || null, name, draft)
-            toast.success("Request saved to collection!")
+            
+            toast("Request saved to collection!", { position: "bottom-right", className: "!bg-emerald-700 !text-white !border-emerald-600", duration: 1000 })
+            
             onClose()
         } catch (err) {
             toast.error("Failed to save request")
