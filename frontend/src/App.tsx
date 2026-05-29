@@ -32,7 +32,7 @@ function App() {
 
 
         <ResizablePanelGroup orientation="horizontal" className="h-full w-full">
-          <ResizablePanel defaultSize="20%" minSize="18%" maxSize="35%">
+          <ResizablePanel defaultSize="20%" minSize="180px" maxSize="35%">
             <SideBar />
           </ResizablePanel>
           <ResizableHandle withHandle />
