@@ -31,50 +31,54 @@ function App() {
         <Toaster position="bottom-right" richColors closeButton />
 
 
-        <div className="flex h-full min-h-0">
+        <ResizablePanelGroup orientation="horizontal" className="h-full w-full">
+          <ResizablePanel defaultSize="20%" minSize="18%" maxSize="35%">
             <SideBar />
+          </ResizablePanel>
+          <ResizableHandle withHandle />
+          <ResizablePanel defaultSize="80%">
+            <div className="flex h-full min-h-0 flex-col overflow-hidden">
+              <RequestMultiTabs />
+              <TopBar />
 
-        <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-            <RequestMultiTabs />
-            <TopBar />
+              <main className="flex min-h-0 min-w-0 flex-1 overflow-hidden p-4">
+                <ResizablePanelGroup
+                  orientation="vertical"
+                  className="min-h-0 flex-1 gap-4"
+                >
+                  {/* Request Panel */}
+                  <ResizablePanel defaultSize={"50%"} minSize={"20%"}>
+                    <section className="flex h-full min-h-0 flex-col overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900">
+                      {/* <div className="border-b border-zinc-800 px-4 py-3"> */}
+                        {/* <h2 className="text-sm font-medium">Request</h2> */}
+                      {/* </div> */}
+                      <div className="flex min-h-0 flex-1 flex-col overflow-auto p-4">
+                        <RequestTabs />
+                      </div>
+                    </section>
+                  </ResizablePanel>
 
-          <main className="flex min-h-0 min-w-0 flex-1 overflow-hidden p-4">
-            <ResizablePanelGroup
-              orientation="vertical"
-              className="min-h-0 flex-1 gap-4"
-            >
-              {/* Request Panel */}
-              <ResizablePanel defaultSize={"50%"} minSize={"20%"}>
-                <section className="flex h-full min-h-0 flex-col overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900">
-                  {/* <div className="border-b border-zinc-800 px-4 py-3"> */}
-                    {/* <h2 className="text-sm font-medium">Request</h2> */}
-                  {/* </div> */}
-                  <div className="flex min-h-0 flex-1 flex-col overflow-auto p-4">
-                    <RequestTabs />
-                  </div>
-                </section>
-              </ResizablePanel>
+                  <ResizableHandle withHandle />
 
-              <ResizableHandle withHandle />
+                  {/* Response Panel */}
+                  <ResizablePanel defaultSize={"50%"} minSize={"20%"}>
+                    <section className="flex h-full min-h-0 flex-col overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900">
+                      <div className="border-b border-zinc-800 px-4 py-3">
+                        <ResponseMeta />
+                      </div>
 
-              {/* Response Panel */}
-              <ResizablePanel defaultSize={"50%"} minSize={"20%"}>
-                <section className="flex h-full min-h-0 flex-col overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900">
-                  <div className="border-b border-zinc-800 px-4 py-3">
-                    <ResponseMeta />
-                  </div>
-
-                  <div className="min-h-0 flex-1 overflow-auto p-4">
-                    <div className="flex min-h-0 flex-1 flex-col">
-                      <ResponseTabs />
-                    </div>
-                  </div>
-                </section>
-              </ResizablePanel>
-            </ResizablePanelGroup>
-          </main>
-        </div>
-      </div>
+                      <div className="min-h-0 flex-1 overflow-auto p-4">
+                        <div className="flex min-h-0 flex-1 flex-col">
+                          <ResponseTabs />
+                        </div>
+                      </div>
+                    </section>
+                  </ResizablePanel>
+                </ResizablePanelGroup>
+              </main>
+            </div>
+          </ResizablePanel>
+        </ResizablePanelGroup>
     </div>
   )
 }
