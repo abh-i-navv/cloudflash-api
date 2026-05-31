@@ -1,5 +1,5 @@
 # CloudFlash API
-<img width="736" height="647" alt="image" src="https://github.com/user-attachments/assets/d3524989-2be5-420f-8cac-7f18652320dd" />
+<img width="1006" height="757" alt="cloudflash" src="https://github.com/user-attachments/assets/a8b75642-3e89-47ed-9043-854b0e774f82" />
 
 CloudFlash API is a desktop API client built with Wails, Go, React, and TypeScript. It lets you send HTTP requests, inspect responses, manage headers and query params, and keep a local request history.
 
