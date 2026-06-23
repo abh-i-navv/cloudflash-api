@@ -28,7 +28,7 @@ function JsonEditorInner({
   )
 
   return (
-    <div className="h-full overflow-hidden rounded-lg border border-zinc-800 ">
+    <div className="h-full overflow-auto custom-scrollbar rounded-lg border border-zinc-800 ">
       <CodeMirror
         value={value}
         height="100%"
