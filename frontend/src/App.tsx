@@ -67,7 +67,7 @@ function App() {
                         <ResponseMeta />
                       </div>
 
-                      <div className="min-h-0 flex-1 overflow-auto p-4">
+                      <div className="min-h-0 flex-1 overflow-auto custom-scrollbar p-4">
                         <div className="flex min-h-0 flex-1 flex-col">
                           <ResponseTabs />
                         </div>
